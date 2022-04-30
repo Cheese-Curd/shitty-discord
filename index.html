@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Shitty Discord</title>
+		<link rel="stylesheet" href="Themes/default.css">
+		<link id="theme-link" rel="stylesheet" href="Themes/light.css">
+	</head>
+
+	<body>
+		<nav>
+			<a id="navMain" class="nav">Main</a>
+			<a id="navSettings" class="nav">Settings</a>
+		</nav>
+		<div>
+			<h1>Shitty Discord</h1>
+		</div>
+		<div id="main" class="page">
+			<div>
+				<span>Advanced Mode</span>
+				<a class="button" id="advancedModeButton" onClick="ToggleAdv()">▼</a>
+			</div>
+			<div id="advancedMode">
+				<span>Channel ID: </span>
+				<input id="channelID"></input>
+				<br>
+				<span>Message: </span>
+				<input id="message" maxlength="2000"></input>
+				<br>
+				<a class="button" id="send">Send!</a>
+			</div>
+		</div>
+		<div id="settings" style="display: none" class="page">
+			<div>
+				<span id="secretButton" onclick="themeTouch()">Theme:</span>
+				<select name="theme" id="theme">
+					<optgroup label="Light Themes">
+						<option value="light">Light (Default)</option>
+						<option value="discord-white">Discord Light</option>
+					</optgroup>
+					<optgroup label="Dark Themes">
+						<option value="dark">Dark</option>
+						<option value="discord-dark">Discord Dark</option>
+					</optgroup>
+					<optgroup label="Other">
+						<option value="purple">Purple</option>
+						<option value="discord-dark-amoled" id="dda">Discord Dark [AMOLED]</option>
+					</optgroup>
+				</select>
+				<br><br>
+				<a class="button" id="save" onclick="saveChanges()">Save Changes</a>
+			</div>
+		</div>
+	</body>
+	<script src="renderer.js"></script>
+</html>
