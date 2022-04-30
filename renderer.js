@@ -14,6 +14,10 @@ var canUse = false;
 const channelID = document.querySelector("#channelID")
 const message = document.querySelector("#message")
 const send = document.querySelector("#send")
+const status = document.querySelector("#status")
+const statusSetting = document.querySelector("#statusSet")
+const statusText = document.querySelector("#statusText")
+const activitySetting = document.querySelector("#activitySet")
 
 // Nav Bar \\
 
@@ -152,27 +156,25 @@ sendembed.addEventListener('click', () =>
 	input.value = '';
   }
 });
-
+*/
 // Set Status \\
 
-setstatus.addEventListener('click', () =>
+status.addEventListener('click', () =>
 {
-	if (playings.checked) {
-	  bot.user.setActivity(input.value, {
-		  type: 'PLAYING'
-	  })
-	  playings.checked = false
-	  input.value = ''
-	} else if (watchings.checked) {
-		bot.user.setActivity(input.value, {
-			type: 'WATCHING'
-		})
-		watchings.checked = false
-		input.value = ''
-	}
-    
+	console.log(statusSetting.value);
+	bot.user.setActivity(statusText.value, {
+		type: statusSetting.value
+	})
+
+	bot.user.setPresence({
+        status: activitySetting.value,  // You can show online, idle... Do not disturb is dnd
+        game: {
+            name: statusText.value,  // The message shown
+            type: statisSetting.value // PLAYING, WATCHING, LISTENING, STREAMING,
+        }
+    });
 });
-*/
+
 // Send Message \\
 
 send.addEventListener('click', () => {

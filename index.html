@@ -5,7 +5,6 @@
 		<link rel="stylesheet" href="Themes/default.css">
 		<link id="theme-link" rel="stylesheet" href="Themes/light.css">
 	</head>
-
 	<body>
 		<nav>
 			<a id="navMain" class="nav">Main</a>
@@ -20,13 +19,46 @@
 				<a class="button" id="advancedModeButton" onClick="ToggleAdv()">▼</a>
 			</div>
 			<div id="advancedMode">
+				<span><b>Messaging</b></span><br>
 				<span>Channel ID: </span>
 				<input id="channelID"></input>
 				<br>
 				<span>Message: </span>
 				<input id="message" maxlength="2000"></input>
 				<br>
-				<a class="button" id="send">Send!</a>
+				<br>
+				<a class="button" id="send">Send Message</a>
+				<br>
+				<br>
+
+				<span><b>Status</b></span>
+				<br>
+				<span>Status Type: </span>
+				<br>
+				<form id="statusSet">
+					<input type="radio" name="status" value="PLAYING" checked>Playing</input>
+					<br>
+					<input type="radio" name="status" value="LISTENING">Watching</input>
+				</form>
+				<span>Status Text: </span>
+				<input id="statusText" maxlength="2000"></input>
+				<br>
+				<br>
+
+				<span><b>Activity</b></span>
+				<br>
+				<span>Activity Type: </span>
+				<br>
+				<form id="activitySet">
+					<input type="radio" name="activity" value="online" checked>Online</input>
+					<br>
+					<input type="radio" name="activity" value="idle">Idle</input>
+					<br>
+					<input type="radio" name="activity" value="dnd">Do Not Disturb</input>
+					<br>
+					<input type="radio" name="activity" value="invisible">Invisible</input>
+				</form>
+				<a class="button" id="status">Set Status</a>
 			</div>
 		</div>
 		<div id="settings" style="display: none" class="page">
