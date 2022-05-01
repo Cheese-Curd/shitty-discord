@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="switches.css">
 		<title>Shitty Discord</title>
 		<link rel="stylesheet" href="Themes/default.css">
 		<link id="theme-link" rel="stylesheet" href="Themes/light.css">
@@ -14,7 +15,7 @@
 			<h1>Shitty Discord</h1>
 		</div>
 		<div id="main" class="page">
-			<div>
+			<div id="advToggle" style="display: none;">
 				<span>Advanced Mode</span>
 				<a class="button" id="advancedModeButton" onClick="ToggleAdv()">▼</a>
 			</div>
@@ -23,10 +24,11 @@
 				<span>Channel ID: </span>
 				<input id="channelID"></input>
 				<br>
+				<div class="code" id="channelName" style="display: none">Unknown Error, Try again.</div>
 				<span>Message: </span>
 				<input id="message" maxlength="2000"></input>
-				<br>
-				<br>
+				<div class="code" id="messageError" style="display: none">Unknown Error, Try again.</div>
+				<br id="seperate" style="display: none">
 				<a class="button" id="send">Send Message</a>
 				<br>
 				<br>
@@ -60,6 +62,7 @@
 				</form>
 				<a class="button" id="status">Set Status</a>
 			</div>
+			<div style="display: flex; flex-direction: row;">test</div>
 		</div>
 		<div id="settings" style="display: none" class="page">
 			<div>
@@ -78,10 +81,15 @@
 						<option value="discord-dark-amoled" id="dda">Discord Dark [AMOLED]</option>
 					</optgroup>
 				</select>
-				<br><br>
-				<a class="button" id="save" onclick="saveChanges()">Save Changes</a>
 			</div>
+			<div style="display: flex; flex-direction: row; margin-top: 5px;">
+				<span>Advanced Mode:</span>
+				<switch symbols="true" id="advMode"></switch>
+			</div>
+			<br><br>
+			<a class="button" id="save" onclick="saveChanges()">Save Changes</a>
 		</div>
 	</body>
+	<script src="switches.js"></script>
 	<script src="renderer.js"></script>
 </html>

@@ -1,6 +1,5 @@
 # JSON
-settings.json
-bot-config.json
+*.json
 
 # Logs
 logs

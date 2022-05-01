@@ -1,0 +1,60 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="switches.min.css">
+		<style id="switchStyle"></style>
+	</head>
+	<body>
+		<switch></switch>
+		<h1>Toggle is off</h1>
+		<br>
+		<div style="margin-left: 8px;">Options:</div>
+		<div style="margin: 8px; padding: 6px; outline: 1px solid black; width: max-content;">
+			<div style="display: flex; flex-direction: row;">
+				<switch id="symbolswitch"></switch>
+				<div style="margin: 1px 0 0 8px;">Symbol in switches</div>
+			</div>
+			<br>
+			<input type="color" name="default" value="#BBBBBB">
+			<label for="default">Default Color</label>
+			<br>
+			<input type="color" name="transition" value="#B3D4A2">
+			<label for="transition">Transition Color</label>
+			<br>
+			<input type="color" name="enabled" value="#AAEC88">
+			<label for="enabled">Enabled Color</label>
+			<br>
+			<input type="color" name="inner" value="#FFFFFF">
+			<label for="inner">Inner Color</label>
+			<br>
+			<br>
+			<input type="url" name="defaultSym" value="https://i.imgur.com/6u9276v.png">
+			<label for="defaultSym">Default Symbol Mask</label>
+			<br>
+			<input type="url" name="transitionSym" value="https://i.imgur.com/LybIVvX.png">
+			<label for="transitionSym">Transition Symbol Mask</label>
+			<br>
+			<input type="url" name="enabledSym" value="https://i.imgur.com/9xOwR2o.png">
+			<label for="enabledSym">Enabled Symbol Mask</label>
+		</div>
+		<br>
+		<pre>version 4.0</pre>
+		<script src="switches.min.js"></script>
+		<script>
+			h1 = document.querySelector('h1');
+			document.querySelector('switch').addEventListener('toggle', e => h1.innerText = "Toggle is " + (e.detail.state ? "on" : "off"));
+			document.querySelector('#symbolswitch').addEventListener('toggle', e => document.querySelectorAll('switch').forEach(elem => elem.setAttribute('symbols', e.detail.state.toString())));
+			
+			document.querySelectorAll('input').forEach(input => input.addEventListener('input', e =>
+			{
+				inDefault = document.querySelector('input[name="default"]').value;
+				inTransition = document.querySelector('input[name="transition"]').value;
+				inEnabled = document.querySelector('input[name="enabled"]').value;
+				inInner = document.querySelector('input[name="inner"]').value;
+				inDefaultSym = document.querySelector('input[name="defaultSym"]').value;
+				inTransitionSym = document.querySelector('input[name="transitionSym"]').value;
+				inEnabledSym = document.querySelector('input[name="enabledSym"]').value;
+				document.querySelector('#switchStyle').innerText = `switch { --default:${inDefault}; --transition:${inTransition}; --enabled:${inEnabled}; --inner:${inInner}; --default-symbol:url(${inDefaultSym}); --transition-symbol:url(${inTransitionSym}); --enabled-symbol:url(${inEnabledSym}); }`;
+			}));
+		</script>
+	</body>
+</html>

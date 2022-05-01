@@ -11,13 +11,23 @@ const config = require("./bot-config.json");
 const token = config.token;
 var channel = null;
 var canUse = false;
-const channelID = document.querySelector("#channelID")
-const message = document.querySelector("#message")
-const send = document.querySelector("#send")
-const status = document.querySelector("#status")
-const statusSetting = document.querySelector("#statusSet")
-const statusText = document.querySelector("#statusText")
-const activitySetting = document.querySelector("#activitySet")
+const channelID = document.querySelector("#channelID");
+const message = document.querySelector("#message");
+const send = document.querySelector("#send");
+const save = document.querySelector("#save");
+const status = document.querySelector("#status");
+const statusSetting = document.querySelector("#statusSet");
+const statusText = document.querySelector("#statusText");
+const activitySetting = document.querySelector("#activitySet");
+const advToggle = document.querySelector("#advToggle");
+const advMode = document.querySelector("#advMode");
+var advEnabled = false;
+
+// Bot Shit \\
+
+document.querySelector('#messageError').style.display = 'block';
+document.querySelector('#messageError').style.color = '#FF0000'
+document.querySelector('#messageError').innerText = 'Bot Not Ready.';
 
 // Nav Bar \\
 
@@ -57,23 +67,6 @@ const dda = document.querySelector("#dda");
 const theme = document.querySelector("#theme");
 const themeLink = document.querySelector("#theme-link");
 
-const fs = require('fs');
-var settings = {};
-
-document.addEventListener("DOMContentLoaded", () => {
-	if (fs.existsSync('./settings.json')) {
-		settings = JSON.parse(fs.readFileSync('./settings.json'));
-		themeLink.href = './Themes/' + settings.theme + '.css';
-		secret = settings.secretEnabled;
-
-		const options = Array.from(theme.options);
-		options.forEach((option, i) => {
-			if (option.value === settings.theme) theme.selectedIndex = i;
-		});
-		if (settings.secretEnabled) dda.style.display = "block"
-	}
-})
-
 // Secret Theme Toggle \\
 
 var clickA = -3
@@ -110,18 +103,57 @@ function themeTouch() {
 	}
 }
 
+// Saving/Settings \\
+
+advMode.addEventListener('toggle', event => advEnabled = event.detail.state);
+
+const fs = require('fs');
+var settings = {};
+
+document.addEventListener("DOMContentLoaded", () => {
+	if (fs.existsSync('./settings.json')) {
+		settings = JSON.parse(fs.readFileSync('./settings.json'));
+		themeLink.href = './Themes/' + settings.theme + '.css';
+		secret = settings.secretEnabled;
+
+		const options = Array.from(theme.options);
+		options.forEach((option, i) => {
+			if (option.value === settings.theme) theme.selectedIndex = i;
+		});
+		if (settings.secretEnabled) dda.style.display = "block";
+		if (settings.advanced) {
+			advToggle.style.display = "block";
+			advMode.setAttribute('state', 'on')
+		}
+	}
+})
+
 function saveChanges() {
 	themeLink.href = './Themes/' + theme.options[theme.selectedIndex].value + '.css';
 
 	var themeData = theme.options[theme.selectedIndex].value;
 	settings.theme = themeData;
 	settings.secretEnabled = secret;
+	settings.advanced = advEnabled;
 
 	try {
 		fs.writeFileSync('./settings.json', JSON.stringify(settings));
+		if (settings.advanced) {
+			advToggle.style.display = "block";
+		} else {
+			advToggle.style.display = "none";
+		}
+		save.innerText = "Saved!"
+		setTimeout(() => {
+			save.innerText = "Save Changes"
+		}, 500)
 		// file written successfully
 	} catch (err) {
 		console.error(err);
+		save.innerText = "Not Saved!"
+		setTimeout(() => {
+			save.innerText = "Save Changes"
+		}, 500)
 	}
 }
 
@@ -170,7 +202,7 @@ status.addEventListener('click', () =>
         status: activitySetting.value,  // You can show online, idle... Do not disturb is dnd
         game: {
             name: statusText.value,  // The message shown
-            type: statisSetting.value // PLAYING, WATCHING, LISTENING, STREAMING,
+            type: statusSetting.value // PLAYING, WATCHING, LISTENING, STREAMING,
         }
     });
 });
@@ -179,8 +211,21 @@ status.addEventListener('click', () =>
 
 send.addEventListener('click', () => {
 	if (canUse) {
-		bot.channels.fetch(channelID.value).then(ch => channel = ch).catch(e => alert(e));
+		if (message.value == '') {
+			document.querySelector('#messageError').innerText = 'RangeError [MESSAGE_CONTENT_TYPE]:\nMessage content must be a non-empty string.';
+			document.querySelector('#messageError').style.color = '#FF0000'
+			document.querySelector('#messageError').style.display = 'block'
+			document.querySelector('#seperate').style.display = 'none';
+		} else {
+			document.querySelector('#messageError').style.color = ''
+			document.querySelector('#messageError').style.display = 'none'
+			document.querySelector('#seperate').style.display = 'block';
+		}
+		bot.channels.fetch(channelID.value).then(ch => channel = ch).catch(e => { document.querySelector('#channelName').innerText = e; document.querySelector('#channelName').style.color = '#FF0000'; channel = null; });
+		document.querySelector('#channelName').style.display = 'block';
 		if (channel != null) {
+			document.querySelector('#channelName').style.color = ''
+			document.querySelector('#channelName').innerText = 'Channel Name: #' +channel.name;
 			channel.send(message.value);
 			message.value = '';
 		}
@@ -191,6 +236,8 @@ send.addEventListener('click', () => {
 
 bot.on('ready', () => {
 	canUse = true;
+	document.querySelector('#messageError').style.display = 'none';
+	document.querySelector('#seperate').style.display = 'block';
 	bot.user.setActivity("Code", {
 		type: 'WATCHING'
 	})

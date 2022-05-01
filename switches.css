@@ -1,0 +1,86 @@
+switch
+{
+	--default: var(--bBackground);
+	--default-symbol: url(https://i.imgur.com/6u9276v.png); /* Using IMGUR as placeholder */
+	--transition: #B3D4A2;
+	--transition-symbol: url(https://i.imgur.com/LybIVvX.png); /* Using IMGUR as placeholder */
+	--enabled: #AAEC88;
+	--enabled-symbol: url(https://i.imgur.com/9xOwR2o.png); /* Using IMGUR as placeholder */
+	--inner: var(--tColor);
+	
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 20px;
+    background: var(--default);
+    border-radius: 24px;
+    position: relative;
+    transition: background 180ms ease-in-out;
+    cursor: pointer;
+}
+
+switch:active
+{
+    background: var(--transition);
+}
+
+switch[state="on"]:not(:active)
+{
+    background: var(--enabled);
+}
+
+switch::after
+{
+    content: '';
+    width: 16px;
+    height: 16px;
+    background: var(--inner);
+    position: relative;
+    right: 9px;
+    border-radius: 24px;
+    box-shadow: 0 1px 4px 0 #00000066;
+    transition: transform 180ms ease-in-out, width 80ms ease-in-out, margin 80ms ease-in-out;
+    pointer-events: none;
+}
+
+switch:active::after 
+{
+	transition: transform 180ms ease-in-out, width 180ms ease-in-out, margin 180ms ease-in-out;
+    width: 22px;
+    margin: 0 0 0 6px;
+}
+
+switch[state="on"]::after
+{
+    transform: translateX(18px);
+}
+
+switch[state="on"]:active::after 
+{
+    width: 22px;
+    margin: 0 6px 0 0;
+}
+
+switch[transitioning="true"]::after
+{
+    width: 22px;
+}
+
+switch[symbols="true"]::after
+{
+    -webkit-mask-image: var(--default-symbol);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 22px 16px;
+    -webkit-mask-position: center;
+}
+
+switch[symbols="true"]:active::after
+{
+    -webkit-mask-image: var(--transition-symbol);
+}
+
+switch[symbols="true"][state="on"]:not(:active)::after
+{
+    -webkit-mask-image: var(--enabled-symbol);
+}
