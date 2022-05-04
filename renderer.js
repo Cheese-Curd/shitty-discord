@@ -1,5 +1,3 @@
-// Thanks for Angel for giving me like half the code lmao \\
-
 // Variables \\
 const Discord = require('discord.js');
 const {
