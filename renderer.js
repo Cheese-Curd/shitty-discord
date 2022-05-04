@@ -21,6 +21,9 @@ const statusText = document.querySelector("#statusText");
 const activitySetting = document.querySelector("#activitySet");
 const advToggle = document.querySelector("#advToggle");
 const advMode = document.querySelector("#advMode");
+const chat = document.querySelector("#chat");
+const pfp = document.querySelector("#pfp");
+const name = document.querySelector("#name");
 var advEnabled = false;
 
 // Bot Shit \\
@@ -126,6 +129,18 @@ document.addEventListener("DOMContentLoaded", () => {
 			advMode.setAttribute('state', 'on')
 		}
 	}
+	setTimeout(() => {
+		if (bot.username == undefined) {
+			name.innerText = 'Unknown Bot';
+		} else {
+			name.innerText = bot.username;
+		}
+		if (bot.discriminator == undefined) {
+			name.innerText += '#0000';
+		} else {
+			name.innerText += '#' + bot.discriminator;
+		}
+	}, 5500);
 })
 
 function saveChanges() {
@@ -156,6 +171,47 @@ function saveChanges() {
 		}, 500)
 	}
 }
+
+// Chat Box \\
+
+function chatMSG(author, text, edited = false, deleted = false, prevMessage = '') {
+	if (edited == false && deleted == false) {
+		chat.innerText += author.username + '#' + author.discriminator + ': ' + text.replace(":tm:", "™️") + '\n';
+	} else if (edited == true) {
+		var msg = prevMessage
+		if (text.includes(':tm:')) {
+			text = text.replace(":tm:", "™️")
+		}
+		if (text.includes(':copyright:')) {te
+			text = text.replace(":copyright:", "©️")
+		}
+
+		chat.innerText += author.username + '#' + author.discriminator + ': ' + text + ' (edited)\n';
+	} else {
+		chat.innerText += author.username + '#' + author.discriminator + ': ' + text + ' (deleted)\n';
+	}	
+}
+
+bot.on('messageCreate', msg => {
+	// console.log('Channel ID from message: ', msg.channel.id, ' Current Channel: ', channel.id)
+	if (msg.channel.id == channel.id) { 
+		chatMSG(msg.author, msg.content);
+	}
+});
+
+bot.on('messageUpdate', (oldMessage, newMessage) => {
+	var msg = newMessage
+	if (msg.channel.id == channel.id) {
+		chatMSG(msg.author, msg.content, true, false, oldMessage);
+	}
+})
+
+bot.on('messageDelete', (messageDelete) => {
+	var msg = messageDelete
+	if (msg.channel.id == channel.id) {
+		chatMSG(msg.author, msg.content, false, true);
+	}
+})
 
 // Embed \\
 /*
@@ -241,7 +297,14 @@ bot.on('ready', () => {
 	bot.user.setActivity("Code", {
 		type: 'WATCHING'
 	})
+	console.log('Bot ID: ' + bot.user);
+	name.innerText = 'Loading...';
+	setTimeout(() => {
+		name.innerText = bot.user.username;
+		name.innerText += '#' + bot.user.discriminator;
+		pfp.src = bot.user.displayAvatarURL();
+	}, 5000);
 })
 
-
-bot.login(token);
+bot.login(token).catch(e => document.querySelector('#messageError').innerText = e)
+console.log('bot logged in?');

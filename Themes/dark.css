@@ -5,4 +5,6 @@
     --background: #2e2e2e;
     --bOutline: #404040;
     --iRadius: 10px;
+    --scrollbarThumb: rgb(97, 97, 97);
+    --scrollbarTrack: #333333;
 }

@@ -1,6 +1,28 @@
 /* Imports */
 @import url('https://fonts.googleapis.com/css2?family=Roboto');
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* width */
+::-webkit-scrollbar {
+    background: var(--scrollbarTrack); 
+    width: 6px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbarThumb); 
+    border-radius: 10px;
+  }
+
 * {
     color: var(--tColor);
     transition: background 450ms ease-in-out;
@@ -22,6 +44,7 @@ nav {
     text-decoration: none;
     outline: 2px solid var(--bOutline);
     margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 #secretButton {
@@ -33,10 +56,31 @@ nav {
     display: none;
 }
 
+#user {
+    /* position: relative; */
+    right: 100%;
+}
+
+#pfp {
+    border-radius: 35px;
+}
+
+#chatbox {
+    background: var(--bBackground);
+    outline: 2px solid var(--bOutline);
+    border-radius: var(--iRadius);
+    width: 50%;
+    height: 28rem;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
 select {
     outline: none;
     background: var(--bBackground);
-    color: var(--tColor);
     border-radius: var(--iRadius);
 }
 
@@ -71,12 +115,15 @@ a, div, span, p, button {
     margin-right: 5px;
 }
 
+div {
+    word-wrap: break-word;
+}
+
 .code {
     margin: 0 2px;
     background-color: var(--bBackground);
     width: max-content;
     font-weight: 600;
-    color: var(--tColor);
     padding: 3px;
     border-radius: var(--iRadius);
 }

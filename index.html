@@ -7,62 +7,69 @@
 		<link id="theme-link" rel="stylesheet" href="Themes/light.css">
 	</head>
 	<body>
-		<nav>
+		<nav style="display: flex;" >
 			<a id="navMain" class="nav">Main</a>
 			<a id="navSettings" class="nav">Settings</a>
+			<div id="user">
+				<span>Logged in as: </span>
+				<img id="pfp" src="./Images/unknown.svg" width="20" height="20">
+				<span id="name">Unknown Bot#0000</span>
+			</div>
 		</nav>
-		<div>
+		<div style="display: flex; flex-direction: row">
 			<h1>Shitty Discord</h1>
 		</div>
-		<div id="main" class="page">
-			<div id="advToggle" style="display: none;">
-				<span>Advanced Mode</span>
-				<a class="button" id="advancedModeButton" onClick="ToggleAdv()">▼</a>
-			</div>
-			<div id="advancedMode">
-				<span><b>Messaging</b></span><br>
-				<span>Channel ID: </span>
-				<input id="channelID"></input>
-				<br>
-				<div class="code" id="channelName" style="display: none">Unknown Error, Try again.</div>
-				<span>Message: </span>
-				<input id="message" maxlength="2000"></input>
-				<div class="code" id="messageError" style="display: none">Unknown Error, Try again.</div>
-				<br id="seperate" style="display: none">
-				<a class="button" id="send">Send Message</a>
-				<br>
-				<br>
+		<div id="main" class="page" style="display: flex; flex-direction: row;">
+			<div style="flex-direction: column">
+				<div id="advToggle" style="display: none;">
+					<span>Advanced Mode</span>
+					<a class="button" id="advancedModeButton" onClick="ToggleAdv()">▼</a>
+				</div>
+				<div id="advancedMode">
+					<span><b>Messaging</b></span><br>
+					<span>Channel ID: </span>
+					<input id="channelID"></input>
+					<br>
+					<div class="code" id="channelName" style="display: none">Unknown Error, Try again.</div>
+					<span>Message: </span>
+					<input id="message" maxlength="2000"></input>
+					<div class="code" id="messageError" style="display: none">Unknown Error, Try again.</div>
+					<br id="seperate" style="display: none">
+					<a class="button" id="send">Send Message</a>
+					<br>
+					<span><b>Status</b></span>
+					<br>
+					<span>Status Type: </span>
+					<br>
+					<form id="statusSet">
+						<input type="radio" name="status" value="PLAYING" checked>Playing</input>
+						<br>
+						<input type="radio" name="status" value="LISTENING">Watching</input>
+					</form>
+					<span>Status Text: </span>
+					<input id="statusText" maxlength="2000"></input>
+					<br>
+					<br>
 
-				<span><b>Status</b></span>
-				<br>
-				<span>Status Type: </span>
-				<br>
-				<form id="statusSet">
-					<input type="radio" name="status" value="PLAYING" checked>Playing</input>
+					<span><b>Activity</b></span>
 					<br>
-					<input type="radio" name="status" value="LISTENING">Watching</input>
-				</form>
-				<span>Status Text: </span>
-				<input id="statusText" maxlength="2000"></input>
-				<br>
-				<br>
-
-				<span><b>Activity</b></span>
-				<br>
-				<span>Activity Type: </span>
-				<br>
-				<form id="activitySet">
-					<input type="radio" name="activity" value="online" checked>Online</input>
+					<span>Activity Type: </span>
 					<br>
-					<input type="radio" name="activity" value="idle">Idle</input>
-					<br>
-					<input type="radio" name="activity" value="dnd">Do Not Disturb</input>
-					<br>
-					<input type="radio" name="activity" value="invisible">Invisible</input>
-				</form>
-				<a class="button" id="status">Set Status</a>
+					<form id="activitySet">
+						<input type="radio" name="activity" value="online" checked>Online</input>
+						<br>
+						<input type="radio" name="activity" value="idle">Idle</input>
+						<br>
+						<input type="radio" name="activity" value="dnd">Do Not Disturb</input>
+						<br>
+						<input type="radio" name="activity" value="invisible">Invisible</input>
+					</form>
+					<a class="button" id="status">Set Status</a>
+				</div>
 			</div>
-			<div style="display: flex; flex-direction: row;">test</div>
+			<div id="chatbox" style="overflow-y: scroll;">
+				<div id="chat"></div>
+			</div>
 		</div>
 		<div id="settings" style="display: none" class="page">
 			<div>
